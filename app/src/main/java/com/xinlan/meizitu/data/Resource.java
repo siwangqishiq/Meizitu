@@ -54,4 +54,18 @@ public class Resource {
     public List<Node> getRootList(){
         return rootList;
     }
+
+    public Node findImageNode(final int pos){
+        if(pos < 0)
+            return null;
+
+        if(rootList.size() > pos){
+            return rootList.get(pos);
+        }
+        return null;
+    }
+
+    public String getNextPage(){
+        return nextPage;
+    }
 }//end class
