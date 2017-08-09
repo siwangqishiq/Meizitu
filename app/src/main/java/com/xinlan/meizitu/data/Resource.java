@@ -50,4 +50,8 @@ public class Resource {
         nextPage = next;
         lock.unlock();
     }
+
+    public List<Node> getRootList(){
+        return rootList;
+    }
 }//end class

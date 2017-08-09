@@ -5,7 +5,9 @@ import android.os.AsyncTask;
 import com.xinlan.meizitu.Constant;
 import com.xinlan.meizitu.data.Node;
 import com.xinlan.meizitu.data.Resource;
+import com.xinlan.meizitu.data.Trans;
 
+import org.greenrobot.eventbus.EventBus;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -32,6 +34,13 @@ public class FindRootNodeTask extends AsyncTask<String, Void, Integer> {
             e.printStackTrace();
         }
         return 0;
+    }
+
+
+    @Override
+    protected void onPostExecute(Integer integer) {
+        super.onPostExecute(integer);
+        EventBus.getDefault().post(new Trans(Constant.CMD_REFRESH_ROOTLIST));
     }
 
     /**

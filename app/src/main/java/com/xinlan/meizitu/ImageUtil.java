@@ -1,11 +1,13 @@
 package com.xinlan.meizitu;
 
+import android.app.Activity;
 import android.content.Context;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.Headers;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,7 +28,27 @@ public class ImageUtil {
             }
         };
 
+        RequestOptions options = new RequestOptions()
+                .placeholder(R.drawable.loading).centerCrop();
+
         GlideUrl gliderUrl = new GlideUrl(url, headers);
-        Glide.with(context).load(gliderUrl).into(img);
+        Glide.with(context).load(gliderUrl).apply(options).into(img);
     }
+
+    /**
+     * Glide
+     .with( context )
+     .load( eatFoodyImages[0] )
+     .skipMemoryCache( true )
+     .into( imageViewInternet );
+     */
+
+
+    /**
+     * Glide
+     .with( context )
+     .load( eatFoodyImages[0] )
+     .diskCacheStrategy( DiskCacheStrategy.NONE )
+     .into( imageViewInternet );
+     */
 }
