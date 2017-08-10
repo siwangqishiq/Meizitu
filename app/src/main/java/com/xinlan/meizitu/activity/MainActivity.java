@@ -43,12 +43,37 @@ public class MainActivity extends BaseActivity {
         mGridList = (RecyclerView) findViewById(R.id.grid_list);
 //        RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
 //        mGridList.setLayoutManager(layoutManager);
+    }
+
+
+    private void loadMoreRootNode() {
+        isLoadMore = true;
+        String url = Resource.getInstance().getNextPage();
+
+        if (TextUtils.isEmpty(url)) {
+            isLoadMore = false;
+            return;
+        }
+        mTask = new FindRootNodeTask();
+        mTask.execute(url);
+    }
+
+    private void initAction() {
+        Resource.getInstance().getRootList().clear();
+        mTask = new FindRootNodeTask();
+        mTask.execute(Constant.MEI_URL);
 
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 2);
-
         mGridList.setLayoutManager(layoutManager);
+
+        //
+        Resource.getInstance().getRootList().clear();
+        System.out.println("--->"+Resource.getInstance().getRootList().size());
+
         mAdapter = new GridAdapter();
+        mAdapter.notifyDataSetChanged();
         mGridList.setAdapter(mAdapter);
+
         mGridList.addItemDecoration(new GridSpacingItemDecoration(2, 10, true));
         mGridList.setItemAnimator(new DefaultItemAnimator());
         mGridList.setHasFixedSize(true);
@@ -79,25 +104,6 @@ public class MainActivity extends BaseActivity {
         });
     }
 
-
-    private void loadMoreRootNode() {
-        isLoadMore = true;
-        String url = Resource.getInstance().getNextPage();
-
-        if (TextUtils.isEmpty(url)) {
-            isLoadMore = false;
-            return;
-        }
-        mTask = new FindRootNodeTask();
-        mTask.execute(url);
-    }
-
-    private void initAction() {
-        Resource.getInstance().getRootList().clear();
-        mTask = new FindRootNodeTask();
-        mTask.execute(Constant.MEI_URL);
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -114,13 +120,13 @@ public class MainActivity extends BaseActivity {
         switch (bean.cmd) {
             case Constant.CMD_REFRESH_ROOTLIST:
                 isLoadMore = false;
-
+                //System.out.println("get cmd");
                 if (mAdapter != null) {
                     Resource.LastRecord record = Resource.getInstance().getLstRecord();
-                    if (record == null) {
-                        mAdapter.notifyDataSetChanged();
-                    } else {
+                    if (record != null && record.positionStart!=0) {
                         mAdapter.notifyItemRangeInserted(record.positionStart, record.itemCount);
+                    } else  {
+                        mAdapter.notifyDataSetChanged();
                     }
                 }//end if
 
