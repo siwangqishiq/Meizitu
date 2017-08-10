@@ -7,6 +7,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xinlan.meizitu.config.Constant;
@@ -33,10 +37,15 @@ public class ImagesActivity extends BaseActivity {
 
     private ViewPager mGallery;
     private ImagesAdapter mAdapter;
+    private TextView mPageText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+
         setContentView(R.layout.activity_images);
         initUI();
         initAction();
@@ -61,6 +70,7 @@ public class ImagesActivity extends BaseActivity {
 
     private void initUI() {
         mGallery = (ViewPager)findViewById(R.id.gallery);
+        mPageText = (TextView)findViewById(R.id.pages_text);
     }
 
     private void refreshImageList(){
@@ -70,6 +80,29 @@ public class ImagesActivity extends BaseActivity {
 
         mAdapter = new ImagesAdapter(this.getSupportFragmentManager());
         mGallery.setAdapter(mAdapter);
+
+        final int total = mNode.getChildList().size();
+
+        mGallery.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                mPageText.setVisibility(View.VISIBLE);
+                mPageText.setText(String.format("%s/%s",position+1,total));
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        mPageText.setVisibility(View.VISIBLE);
+        mPageText.setText(String.format("%s/%s",1,total));
     }
 
     private void initAction() {
@@ -82,6 +115,7 @@ public class ImagesActivity extends BaseActivity {
             return;
 
         if (mNode.getChildList() == null) {//load data
+            mPageText.setVisibility(View.INVISIBLE);
             mImagesTask = new ImageNodeTask(mNode);
             mImagesTask.execute(mNode.getLink());
         }else{
