@@ -1,6 +1,7 @@
 package com.xinlan.meizitu.activity;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,6 +23,7 @@ public class MainActivity extends BaseActivity {
     //
     private FindRootNodeTask mTask;
     private RecyclerView mGridList;
+    private SwipeRefreshLayout mRefreshLayout;
 
     private GridAdapter mAdapter;
     private boolean isLoadMore = false;
@@ -41,6 +43,7 @@ public class MainActivity extends BaseActivity {
         setSupportActionBar(toolbar);
 
         mGridList = (RecyclerView) findViewById(R.id.grid_list);
+        mRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
 //        RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
 //        mGridList.setLayoutManager(layoutManager);
     }
@@ -59,16 +62,12 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initAction() {
-        Resource.getInstance().getRootList().clear();
-        mTask = new FindRootNodeTask();
-        mTask.execute(Constant.MEI_URL);
-
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 2);
         mGridList.setLayoutManager(layoutManager);
 
         //
         Resource.getInstance().getRootList().clear();
-        System.out.println("--->"+Resource.getInstance().getRootList().size());
+        //System.out.println("--->"+Resource.getInstance().getRootList().size());
 
         mAdapter = new GridAdapter();
         mAdapter.notifyDataSetChanged();
@@ -102,6 +101,21 @@ public class MainActivity extends BaseActivity {
                 ImagesActivity.start(MainActivity.this, pos);
             }
         });
+
+        mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadData();
+            }
+        });
+        loadData();
+    }
+
+    private void loadData(){
+        isLoadEnd = false;
+        Resource.getInstance().getRootList().clear();
+        mTask = new FindRootNodeTask();
+        mTask.execute(Constant.MEI_URL);
     }
 
     @Override
@@ -119,6 +133,7 @@ public class MainActivity extends BaseActivity {
 
         switch (bean.cmd) {
             case Constant.CMD_REFRESH_ROOTLIST:
+                mRefreshLayout.setRefreshing(false);
                 isLoadMore = false;
                 //System.out.println("get cmd");
                 if (mAdapter != null) {
