@@ -46,7 +46,7 @@ public class ImageUtil {
     }
 
     public static void loadImage(Fragment context, final String refer, final String url, final ImageView img, final ProgressBar progress) {
-        RequestOptions options = new RequestOptions().centerCrop().error(R.drawable.error);
+        RequestOptions options = new RequestOptions().error(R.drawable.error).fitCenter();
         GlideUrl gliderUrl = new GlideUrl(url, new Headers() {
             @Override
             public Map<String, String> getHeaders() {

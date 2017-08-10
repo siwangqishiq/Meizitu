@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 
 import com.xinlan.meizitu.R;
 import com.xinlan.meizitu.util.ImageUtil;
+import com.xinlan.meizitu.widget.PinchImageView;
 
 /**
  * Created by panyi on 2017/8/10.
@@ -22,7 +23,7 @@ public class ImageFragment extends Fragment {
     private String refer;
 
     private View mRootView;
-    private ImageView mImageView;
+    private PinchImageView mImageView;
     private ProgressBar mProgressBar;
 
     public static ImageFragment newInstance(String img, String path) {
@@ -47,7 +48,7 @@ public class ImageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.view_gallery_image, container, false);
-        mImageView = (ImageView) mRootView.findViewById(R.id.img);
+        mImageView = (PinchImageView) mRootView.findViewById(R.id.img);
         mProgressBar = (ProgressBar) mRootView.findViewById(R.id.progress);
         return mRootView;
     }

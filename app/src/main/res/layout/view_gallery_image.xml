@@ -5,8 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
+    <com.xinlan.meizitu.widget.PinchImageView
         android:id="@+id/img"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_launcher"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
