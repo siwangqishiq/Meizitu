@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.xinlan.meizitu.ImageUtil;
+import com.xinlan.meizitu.util.ImageUtil;
 import com.xinlan.meizitu.R;
 import com.xinlan.meizitu.data.Node;
 import com.xinlan.meizitu.data.Resource;

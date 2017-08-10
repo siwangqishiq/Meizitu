@@ -1,4 +1,4 @@
-package com.xinlan.meizitu;
+package com.xinlan.meizitu.config;
 
 /**
  * Created by panyi on 2017/8/9.
@@ -11,4 +11,5 @@ public class Constant {
     public static final String INTENT_PARAM_POS = "intent_param_pos";
 
     public static final int CMD_REFRESH_ROOTLIST = 1;
+    public static final int CMD_NODE_LIST_GET = 2;
 }

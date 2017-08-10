@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">漂亮的小姐姐</string>
+    <string name="not_get_data">没有获取到数据</string>
 </resources>

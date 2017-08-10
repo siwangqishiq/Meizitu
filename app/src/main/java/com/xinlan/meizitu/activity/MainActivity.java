@@ -1,18 +1,14 @@
 package com.xinlan.meizitu.activity;
 
 import android.os.Bundle;
-import android.provider.Settings;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 
-import com.xinlan.meizitu.Constant;
-import com.xinlan.meizitu.GridSpacingItemDecoration;
+import com.xinlan.meizitu.config.Constant;
+import com.xinlan.meizitu.widget.GridSpacingItemDecoration;
 import com.xinlan.meizitu.R;
 import com.xinlan.meizitu.adapter.GridAdapter;
 import com.xinlan.meizitu.data.Resource;

@@ -2,7 +2,7 @@ package com.xinlan.meizitu.task;
 
 import android.os.AsyncTask;
 
-import com.xinlan.meizitu.Constant;
+import com.xinlan.meizitu.config.Constant;
 import com.xinlan.meizitu.data.Node;
 import com.xinlan.meizitu.data.Resource;
 import com.xinlan.meizitu.data.Trans;
@@ -12,8 +12,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-
-import java.io.IOException;
 
 /**
  * Created by panyi on 2017/8/9.
