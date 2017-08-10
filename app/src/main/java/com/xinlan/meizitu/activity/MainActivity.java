@@ -44,7 +44,7 @@ public class MainActivity extends BaseActivity {
 //        RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
 //        mGridList.setLayoutManager(layoutManager);
 
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this , 2);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 2);
 
         mGridList.setLayoutManager(layoutManager);
         mAdapter = new GridAdapter();
@@ -57,13 +57,13 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if(isLoadMore)
+                if (isLoadMore)
                     return;
 
-                if(newState == RecyclerView.SCROLL_STATE_IDLE){
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     GridLayoutManager lm = (GridLayoutManager) recyclerView.getLayoutManager();
                     int lastVisiblePosition = lm.findLastVisibleItemPosition();
-                    if(lastVisiblePosition >= lm.getItemCount() - 1){
+                    if (lastVisiblePosition >= lm.getItemCount() - 1) {
                         //System.out.println("Load more...");
                         loadMoreRootNode();
                     }
@@ -80,12 +80,11 @@ public class MainActivity extends BaseActivity {
     }
 
 
-
-    private void loadMoreRootNode(){
+    private void loadMoreRootNode() {
         isLoadMore = true;
         String url = Resource.getInstance().getNextPage();
 
-        if(TextUtils.isEmpty(url)){
+        if (TextUtils.isEmpty(url)) {
             isLoadMore = false;
             return;
         }
@@ -109,15 +108,22 @@ public class MainActivity extends BaseActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(Trans bean) {
-        if(bean == null)
+        if (bean == null)
             return;
 
-        switch (bean.cmd){
+        switch (bean.cmd) {
             case Constant.CMD_REFRESH_ROOTLIST:
                 isLoadMore = false;
+
                 if (mAdapter != null) {
-                    mAdapter.notifyDataSetChanged();
-                }
+                    Resource.LastRecord record = Resource.getInstance().getLstRecord();
+                    if (record == null) {
+                        mAdapter.notifyDataSetChanged();
+                    } else {
+                        mAdapter.notifyItemRangeInserted(record.positionStart, record.itemCount);
+                    }
+                }//end if
+
                 break;
 
         }//end switch

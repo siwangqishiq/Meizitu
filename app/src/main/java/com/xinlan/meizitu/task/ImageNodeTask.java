@@ -33,6 +33,7 @@ public class ImageNodeTask extends AsyncTask<String, Void, Integer> {
     @Override
     protected Integer doInBackground(String... strings) {
         String url = strings[0];
+        System.out.println("url = "+url);
         try {
             Document doc = Jsoup.connect(url)
                     .userAgent(Constant.UA).get();
@@ -139,8 +140,8 @@ public class ImageNodeTask extends AsyncTask<String, Void, Integer> {
             imageNode.setImage(imageUrl);
             imageNode.setRefer(refer);
             nodes.add(imageNode);
-//            System.out.println("refer = " + refer);
-//            System.out.println("imageUrl = " + imageUrl);
+            //System.out.println("refer = " + refer);
+            //System.out.println("imageUrl = " + imageUrl);
         }//end for i
 
         if (nodes.size() > 0) {

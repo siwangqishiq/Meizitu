@@ -58,6 +58,8 @@ public class FindRootNodeTask extends AsyncTask<String, Void, Integer> {
 
         Element contentElem = postList.get(0);
         Elements list = contentElem.getElementsByTag("li");
+
+        Resource.getInstance().saveLstRecord();
         for (Element liElem : list) {
             Node node = new Node();
             node.setRefer(url);
@@ -83,6 +85,8 @@ public class FindRootNodeTask extends AsyncTask<String, Void, Integer> {
             Resource.getInstance().addRootList(node);
             //System.out.println("sdsa--->"+liElem.toString());
         }//end for each li tag
+
+        Resource.getInstance().setLstRecord();
         return 0;
     }
 

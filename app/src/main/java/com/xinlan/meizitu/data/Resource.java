@@ -29,6 +29,8 @@ public class Resource {
     private List<Node> rootList;
     private String nextPage;
 
+    private LastRecord lstRecord;
+
     private Resource() {
         mLock = new ReentrantReadWriteLock();
 
@@ -65,7 +67,30 @@ public class Resource {
         return null;
     }
 
+    public void saveLstRecord(){
+        this.lstRecord = new LastRecord();
+        lstRecord.positionStart = getRootList().size();
+        lstRecord.itemCount = getRootList().size();
+    }
+
+    public void setLstRecord(){
+        if(lstRecord!=null){
+            lstRecord.itemCount = getRootList().size() - lstRecord.itemCount;
+        }
+    }
+
+    public LastRecord getLstRecord(){
+        LastRecord record = lstRecord;
+        lstRecord = null;
+        return record;
+    }
+
     public String getNextPage(){
         return nextPage;
+    }
+
+    public static class LastRecord{
+        public int positionStart;
+        public int itemCount;
     }
 }//end class
