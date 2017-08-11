@@ -92,5 +92,13 @@ public class Resource {
     public static class LastRecord{
         public int positionStart;
         public int itemCount;
+
+        @Override
+        public String toString() {
+            return "LastRecord{" +
+                    "positionStart=" + positionStart +
+                    ", itemCount=" + itemCount +
+                    '}';
+        }
     }
 }//end class
