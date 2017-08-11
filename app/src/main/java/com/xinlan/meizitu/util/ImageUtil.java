@@ -1,8 +1,15 @@
 package com.xinlan.meizitu.util;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -19,6 +26,10 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.xinlan.meizitu.R;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -70,20 +81,70 @@ public class ImageUtil {
         }).apply(options).into(img);
     }
 
-    /**
-     * Glide
-     .with( context )
-     .load( eatFoodyImages[0] )
-     .skipMemoryCache( true )
-     .into( imageViewInternet );
-     */
 
+    public static boolean saveImageToGallery(Context context, Bitmap bmp,String folder) {
+        boolean ret = false;
+
+        // 首先保存图片
+        File appDir = new File(folder);
+        if (!appDir.exists()) {
+            appDir.mkdirs();
+        }
+        String fileName = System.currentTimeMillis() + ".jpg";
+        File currentFile = new File(appDir, fileName);
+        FileOutputStream fos = null;
+        try {
+            currentFile.createNewFile();
+
+            fos = new FileOutputStream(currentFile);
+            bmp.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            fos.flush();
+
+            ablumUpdate(context,currentFile.getPath());
+            ret = true;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            ret = false;
+        } catch (IOException e) {
+            e.printStackTrace();
+            ret = false;
+        } finally {
+            try {
+                if (fos != null) {
+                    fos.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                ret = false;
+            }
+        }
+        return ret;
+    }
 
     /**
-     * Glide
-     .with( context )
-     .load( eatFoodyImages[0] )
-     .diskCacheStrategy( DiskCacheStrategy.NONE )
-     .into( imageViewInternet );
+     * 将图片文件加入到相册
+     * @param context
+     * @param dstPath
      */
+    public static void ablumUpdate(final Context context, final String dstPath) {
+        if (TextUtils.isEmpty(dstPath) || context == null)
+            return;
+
+        ContentValues values = new ContentValues(2);
+        String extensionName = getExtensionName(dstPath);
+        values.put(MediaStore.Images.Media.MIME_TYPE, "image/" + (TextUtils.isEmpty(extensionName) ? "jpeg" : extensionName));
+        values.put(MediaStore.Images.Media.DATA, dstPath);
+        context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+    }
+
+    // 获取文件扩展名
+    public static String getExtensionName(String filename) {
+        if ((filename != null) && (filename.length() > 0)) {
+            int dot = filename.lastIndexOf('.');
+            if ((dot > -1) && (dot < (filename.length() - 1))) {
+                return filename.substring(dot + 1);
+            }
+        }
+        return "";
+    }
 }
