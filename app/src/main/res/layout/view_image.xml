@@ -16,9 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:background="#44000000"
-        android:maxLines="1"
         android:padding="8dp"
-        android:singleLine="true"
         android:textColor="@color/white"
         android:textSize="14sp" />
 
