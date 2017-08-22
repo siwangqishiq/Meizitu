@@ -1,12 +1,16 @@
 package com.xinlan.meizitu.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.View;
 
 import com.xinlan.meizitu.config.Constant;
 import com.xinlan.meizitu.widget.GridSpacingItemDecoration;
@@ -97,8 +101,12 @@ public class MainActivity extends BaseActivity {
 
         mAdapter.setItemClick(new GridAdapter.IItemClick() {
             @Override
-            public void onItemClick(final int pos) {
-                ImagesActivity.start(MainActivity.this, pos);
+            public void onItemClick(final View view, final int pos) {
+                ActivityOptionsCompat optionCompat = ActivityOptionsCompat.makeScaleUpAnimation(view,
+                        view.getWidth() / 2, view.getHeight() / 2, 0, 0);
+                Intent it = new Intent(MainActivity.this, ImagesActivity.class);
+                it.putExtra(Constant.INTENT_PARAM_POS, pos);
+                ActivityCompat.startActivity(MainActivity.this, it, optionCompat.toBundle());
             }
         });
 
@@ -111,7 +119,7 @@ public class MainActivity extends BaseActivity {
         loadData();
     }
 
-    private void loadData(){
+    private void loadData() {
         isLoadEnd = false;
         Resource.getInstance().getRootList().clear();
         mTask = new FindRootNodeTask();
@@ -138,9 +146,9 @@ public class MainActivity extends BaseActivity {
                 //System.out.println("get cmd");
                 if (mAdapter != null) {
                     Resource.LastRecord record = Resource.getInstance().getLstRecord();
-                    if (record != null && record.positionStart!=0) {
+                    if (record != null && record.positionStart != 0) {
                         mAdapter.notifyItemRangeInserted(record.positionStart, record.itemCount);
-                    } else  {
+                    } else {
                         mAdapter.notifyDataSetChanged();
                     }
                 }//end if

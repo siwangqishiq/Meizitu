@@ -19,7 +19,7 @@ import com.xinlan.meizitu.holder.GridViewHolder;
 public class GridAdapter extends RecyclerView.Adapter<GridViewHolder> {
 
     public static interface IItemClick {
-        void onItemClick(final int pos);
+        void onItemClick(final View view,final int pos);
     }
 
     private IItemClick mItemClick;
@@ -49,7 +49,7 @@ public class GridAdapter extends RecyclerView.Adapter<GridViewHolder> {
             @Override
             public void onClick(View view) {
                 if (mItemClick != null) {
-                    mItemClick.onItemClick(position);
+                    mItemClick.onItemClick(view ,position);
                 }
             }
         });
