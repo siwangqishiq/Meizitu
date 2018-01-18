@@ -84,6 +84,13 @@ public class ImageFragment extends Fragment {
                 return true;
             }
         });
+
+        mImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
     }
 
     private void showDialog(){

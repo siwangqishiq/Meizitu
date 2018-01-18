@@ -53,6 +53,8 @@ public class PinchImageView extends android.support.v7.widget.AppCompatImageView
      */
     private OnLongClickListener mOnLongClickListener;
 
+
+
     @Override
     public void setOnClickListener(OnClickListener l) {
         //默认的click会在任何点击情况下都会触发，所以搞成自己的
