@@ -21,4 +21,6 @@ public class Constant {
 
     public static final int CMD_REFRESH_ROOTLIST = 1;
     public static final int CMD_NODE_LIST_GET = 2;
+
+
 }

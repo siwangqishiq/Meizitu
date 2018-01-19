@@ -13,6 +13,8 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.xinlan.meizitu.config.Constant;
+import com.xinlan.meizitu.controller.VersionUpdate;
+import com.xinlan.meizitu.data.MessageEvent;
 import com.xinlan.meizitu.widget.GridSpacingItemDecoration;
 import com.xinlan.meizitu.R;
 import com.xinlan.meizitu.adapter.GridAdapter;
@@ -40,6 +42,8 @@ public class MainActivity extends BaseActivity {
 
         initUI();
         initAction();
+
+        VersionUpdate.getInstance().checkNewVersion(this);
     }
 
     private void initUI() {
@@ -134,6 +138,10 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+    @Override
+    public void onMsgEvent(MessageEvent event) {
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(Trans bean) {
         if (bean == null)
@@ -152,9 +160,7 @@ public class MainActivity extends BaseActivity {
                         mAdapter.notifyDataSetChanged();
                     }
                 }//end if
-
                 break;
-
         }//end switch
     }
 }//end class

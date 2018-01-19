@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.xinlan.meizitu.config.Constant;
 import com.xinlan.meizitu.R;
+import com.xinlan.meizitu.data.MessageEvent;
 import com.xinlan.meizitu.data.Node;
 import com.xinlan.meizitu.data.Resource;
 import com.xinlan.meizitu.data.Trans;
@@ -130,6 +131,10 @@ public class ImagesActivity extends BaseActivity {
         if (mImagesTask != null) {
             mImagesTask.cancel(true);
         }
+    }
+
+    @Override
+    public void onMsgEvent(MessageEvent event) {
     }
 
     @Override
