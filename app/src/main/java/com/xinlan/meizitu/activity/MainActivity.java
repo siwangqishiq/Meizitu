@@ -12,9 +12,11 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.xinlan.meizitu.bean.UpdateBean;
 import com.xinlan.meizitu.config.Constant;
 import com.xinlan.meizitu.controller.VersionUpdate;
 import com.xinlan.meizitu.data.MessageEvent;
+import com.xinlan.meizitu.data.TransCode;
 import com.xinlan.meizitu.widget.GridSpacingItemDecoration;
 import com.xinlan.meizitu.R;
 import com.xinlan.meizitu.adapter.GridAdapter;
@@ -140,6 +142,9 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void onMsgEvent(MessageEvent event) {
+        if(event.getCmd() == TransCode.CMD_UPDATE){//有新版本
+            VersionUpdate.getInstance().handleOnUpdate(this , (UpdateBean) event.getData());
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

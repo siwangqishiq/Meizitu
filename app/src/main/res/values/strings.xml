@@ -3,4 +3,7 @@
     <string name="not_get_data">没有获取到数据</string>
     <string name="save_image_success">保存图片成功</string>
     <string name="save_image_error">保存图片失败</string>
+    <string name="update_msg">检测到有新版本 是否更新?</string>
+    <string name="update">更新</string>
+    <string name="cancel">取消</string>
 </resources>
