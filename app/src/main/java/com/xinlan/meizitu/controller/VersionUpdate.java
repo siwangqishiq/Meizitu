@@ -66,7 +66,7 @@ public class VersionUpdate {
                     //
                     try {
                         String respRaw = response.body().string();
-                        mLogger.info(response.body().string());
+                        mLogger.info(respRaw);
                         UpdateBean updateBean = JSON.parseObject(respRaw , UpdateBean.class);
                         System.out.println("最新版本 = "+updateBean.getVersion() +"  当前版本 = "+ SystemUtil.getVersionCode(context));
                         System.out.println("最新版本:"+updateBean.getVersionString());
