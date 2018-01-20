@@ -9,4 +9,7 @@ import okhttp3.OkHttpClient;
 public class NetClient {
     public static OkHttpClient mClient = new OkHttpClient();
 
+    public static OkHttpClient getClient(){
+        return mClient;
+    }
 }

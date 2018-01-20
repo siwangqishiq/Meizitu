@@ -1,7 +1,9 @@
 package com.xinlan.meizitu.activity;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -167,5 +169,12 @@ public class MainActivity extends BaseActivity {
                 }//end if
                 break;
         }//end switch
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        VersionUpdate.getInstance().onRequestPermissionsResult(this , requestCode ,
+                permissions , grantResults);
     }
 }//end class

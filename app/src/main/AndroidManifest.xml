@@ -28,8 +28,19 @@
             android:name=".activity.ImagesActivity"
             android:configChanges="orientation|screenSize"></activity>
 
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.xinlan.meizitu"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_path" />
+        </provider>
+
         <meta-data android:value="598d432707fe65155b000b93" android:name="UMENG_APPKEY"/>
         <meta-data android:value="001" android:name="UMENG_CHANNEL"/>
+
     </application>
 
 </manifest>

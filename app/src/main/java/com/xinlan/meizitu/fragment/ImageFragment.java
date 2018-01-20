@@ -44,7 +44,6 @@ public class ImageFragment extends Fragment {
     private PinchImageView mImageView;
     private ProgressBar mProgressBar;
 
-    private final int PERMISSION_REQUEST_CODE = 0x001;
 
     public static ImageFragment newInstance(String img, String path) {
         ImageFragment frg = new ImageFragment();
@@ -111,7 +110,7 @@ public class ImageFragment extends Fragment {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == PERMISSION_REQUEST_CODE) {
+        if (requestCode == Constant.PERMISSION_REQUEST_CODE) {
             if(grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                 doSaveImageToLocal();
             }
@@ -125,7 +124,7 @@ public class ImageFragment extends Fragment {
         if (Build.VERSION.SDK_INT >= 23 &&
                 ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
-                    requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
+                    requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, Constant.PERMISSION_REQUEST_CODE);
         } else {
             doSaveImageToLocal();
         }
