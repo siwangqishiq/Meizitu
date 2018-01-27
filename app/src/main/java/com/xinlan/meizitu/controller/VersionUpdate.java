@@ -168,7 +168,7 @@ public class VersionUpdate {
         if(apkFile == null || !apkFile.exists())
             return;
         //open apk file to install
-        System.out.println("apk === >"+apkFile.getAbsolutePath());
+        //System.out.println("apk === >"+apkFile.getAbsolutePath());
         ToastUtil.showLong(mContext , apkFile.getAbsolutePath());
         SystemUtil.openFile(mContext , apkFile);
     }

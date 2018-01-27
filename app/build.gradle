@@ -3,7 +3,10 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         config {
-            storeFile file('test.jks')
+            storeFile file('/home/panyi/AndroidStudioProjects/Meizitu/test.jks')
+            keyAlias 'key0'
+            keyPassword '111111'
+            storePassword '111111'
         }
     }
     compileSdkVersion 27
@@ -12,7 +15,7 @@ android {
         applicationId "com.xinlan.meizitu"
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 4
+        versionCode 5
         versionName "1.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
