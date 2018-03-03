@@ -12,6 +12,7 @@ public class MeijuanApp extends Application {
     public void onCreate() {
         super.onCreate();
         VersionUpdate.getInstance().init(this);//更新检测控件
+        PositionRecord.getInstance().init(this);//位置记录控件初始化
     }
 
     @Override

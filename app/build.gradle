@@ -15,8 +15,8 @@ android {
         applicationId "com.xinlan.meizitu"
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 5
-        versionName "1.1"
+        versionCode 6
+        versionName "1.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

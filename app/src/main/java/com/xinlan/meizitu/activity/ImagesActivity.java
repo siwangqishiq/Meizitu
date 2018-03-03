@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.xinlan.meizitu.config.Constant;
 import com.xinlan.meizitu.R;
+import com.xinlan.meizitu.controller.PositionRecord;
 import com.xinlan.meizitu.data.MessageEvent;
 import com.xinlan.meizitu.data.Node;
 import com.xinlan.meizitu.data.Resource;
@@ -61,8 +62,8 @@ public class ImagesActivity extends BaseActivity {
         switch (bean.cmd) {
             case Constant.CMD_NODE_LIST_GET:
                 mNode = Resource.getInstance().findImageNode(mPos);
-                if(mNode.getChildList() == null){
-                    Toast.makeText(this,R.string.not_get_data,Toast.LENGTH_SHORT).show();
+                if (mNode.getChildList() == null) {
+                    Toast.makeText(this, R.string.not_get_data, Toast.LENGTH_SHORT).show();
                     return;
                 }
                 refreshImageList();
@@ -71,12 +72,12 @@ public class ImagesActivity extends BaseActivity {
     }
 
     private void initUI() {
-        mGallery = (ViewPager)findViewById(R.id.gallery);
-        mPageText = (TextView)findViewById(R.id.pages_text);
+        mGallery = (ViewPager) findViewById(R.id.gallery);
+        mPageText = (TextView) findViewById(R.id.pages_text);
     }
 
-    private void refreshImageList(){
-        if(mNode.getChildList() == null){
+    private void refreshImageList() {
+        if (mNode.getChildList() == null) {
             return;
         }
 
@@ -93,8 +94,7 @@ public class ImagesActivity extends BaseActivity {
 
             @Override
             public void onPageSelected(int position) {
-                mPageText.setVisibility(View.VISIBLE);
-                mPageText.setText(String.format("%s/%s",position+1,total));
+                selectPage(position, total);
             }
 
             @Override
@@ -104,7 +104,18 @@ public class ImagesActivity extends BaseActivity {
         });
 
         mPageText.setVisibility(View.VISIBLE);
-        mPageText.setText(String.format("%s/%s",1,total));
+        mPageText.setText(String.format("%s/%s", 1, total));
+
+        int lstPos = PositionRecord.getInstance().getHistoryPos(mNode.getLink());
+        if (lstPos > 0) {
+            mGallery.setCurrentItem(lstPos);
+            selectPage(lstPos, total);
+        }
+    }
+
+    private void selectPage(final int position, final int total) {
+        mPageText.setVisibility(View.VISIBLE);
+        mPageText.setText(String.format("%s/%s", position + 1, total));
     }
 
     private void initAction() {
@@ -120,7 +131,7 @@ public class ImagesActivity extends BaseActivity {
             mPageText.setVisibility(View.INVISIBLE);
             mImagesTask = new ImageNodeTask(mNode);
             mImagesTask.execute(mNode.getLink());
-        }else{
+        } else {
             refreshImageList();
         }
     }
@@ -128,6 +139,13 @@ public class ImagesActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (mNode != null && mNode.getChildList()!=null) {
+            int pos = mGallery.getCurrentItem();
+            if(pos>0 && pos < mNode.getChildList().size()){
+                PositionRecord.getInstance().record(mNode.getLink(), pos);
+            }
+        }
+
         if (mImagesTask != null) {
             mImagesTask.cancel(true);
         }
@@ -147,7 +165,7 @@ public class ImagesActivity extends BaseActivity {
 //        }
     }
 
-    private final class ImagesAdapter extends FragmentStatePagerAdapter{
+    private final class ImagesAdapter extends FragmentStatePagerAdapter {
         public ImagesAdapter(FragmentManager fm) {
             super(fm);
         }
@@ -155,7 +173,7 @@ public class ImagesActivity extends BaseActivity {
         @Override
         public Fragment getItem(int position) {
             Node n = mNode.getChildList().get(position);
-            return ImageFragment.newInstance(n.getImage(),n.getRefer());
+            return ImageFragment.newInstance(n.getImage(), n.getRefer());
         }
 
         @Override
