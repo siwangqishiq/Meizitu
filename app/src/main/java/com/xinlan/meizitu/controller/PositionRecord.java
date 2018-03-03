@@ -53,9 +53,11 @@ public class PositionRecord {
             mLogger.info("read rawSrc ---> " + rawSrc);
             records.clear();
             List<PosBean> posBeanList = JSONArray.parseArray(rawSrc, PosBean.class);
-            if (posBeanList != null && posBeanList.size() == 0) {
+            if (posBeanList != null && posBeanList.size() > 0) {
                 for (PosBean bean : posBeanList) {
                     records.put(bean.getLink(), bean.getPos());
+                    //System.out.println("add link = "+bean.getLink());
+                    //System.out.println("add pos = "+bean.getPos());
                 }//end for each
             }//end if
         } catch (Exception e) {
@@ -105,6 +107,8 @@ public class PositionRecord {
     public static class PosBean {
         private String link;
         private int pos;
+        public PosBean(){
+        }
 
         public PosBean(String link, int pos) {
             this.link = link;
