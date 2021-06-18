@@ -7,7 +7,7 @@ import android.os.Environment;
  */
 
 public class Constant {
-    public static final String MEI_URL = "http://www.mzitu.com";
+    public static final String MEI_URL = "https://www.mzitu.com";
     //public static final String MEI_URL = "http://www.mzitu.com/page/149/";
 
     public static final String FOLDR_NAME = "meizitu";
